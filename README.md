@@ -1,3 +1,5 @@
+Chaning root file to check CodeFresh trigger
+
 # Kubernetes Wordsmith Demo
 
 Wordsmith is the demo project shown at DockerCon EU 2017, where Docker announced that support for Kubernetes was coming to the Docker platform.
