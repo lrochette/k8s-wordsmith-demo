@@ -13,7 +13,7 @@ steps:
   clone:
     title: "Cloning repository"
     type: "git-clone"
-    repo: "lrochette/k8s-wordsmith-demo"
+    repo: "${{CF_REPO_OWNER}}/${{CF_REPO_NAME}}"
     # CF_BRANCH value is auto set when pipeline is triggered
     # Learn more at codefresh.io/docs/docs/codefresh-yaml/variables/
     revision: "${{CF_BRANCH}}"
@@ -28,14 +28,15 @@ steps:
     tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
     dockerfile: "Dockerfile"
     stage: "build"
+    disable_push: true
 
   test:
     title: "Running test"
     type: "freestyle" # Run any command
     image: "ubuntu:latest" # The image in which command will be executed
-    working_directory: "${{clone}}" # Running command where code cloned
+    working_directory: "${{clone}}/web" # Running command where code cloned
     commands:
-      - "ls"
+      - "gofmt -d dispatcher.go"
     stage: "test"
 
   MyPushStep:
@@ -43,6 +44,6 @@ steps:
     type: push
     stage: upload
     tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
-    candidate: '${{MyAppDockerImage}}'
+    candidate: '${{build}}'
     image_name: lrochette/k8s-wordsmith-demo
     registry: dockerhub # Name of your integration as was defined in the Registry screen
