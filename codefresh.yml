@@ -8,6 +8,7 @@ stages:
   - build
   - test
   - upload
+  - deploy
 
 steps:
   clone:
@@ -36,8 +37,7 @@ steps:
     arguments:
       WORKING_DIRECTORY: '${{clone}}'
       REPO_NAME: '${{CF_REPO_NAME}}'
-      COMMAND: gofmt web/dispatcher.go
-
+      COMMAND: gofmt -d web/dispatcher.go
     stage: "test"
 
   MyPushStep:
@@ -48,3 +48,16 @@ steps:
     candidate: '${{build}}'
     image_name: lrochette/k8s-wordsmith-demo
     registry: dockerhub # Name of your integration as was defined in the Registry screen
+
+  Deploy:
+    title: deploying to cluster
+    type: deploy
+    stage: deploy
+    arguments:
+      candidate:
+        image: '${{build}}'
+        registry: dockerhub
+      kind: kubernetes
+      cluster: my-first-cluster-1
+      namespace: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
+      service: web
