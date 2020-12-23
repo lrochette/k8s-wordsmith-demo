@@ -31,12 +31,13 @@ steps:
     disable_push: true
 
   test:
-    title: "Running test"
-    type: "freestyle" # Run any command
-    image: "ubuntu:latest" # The image in which command will be executed
-    working_directory: "${{clone}}/web" # Running command where code cloned
-    commands:
-      - "gofmt -d dispatcher.go"
+    title: Update gitops repo with changes to be deployed
+    type: razielt77_github/golang-test
+    arguments:
+      WORKING_DIRECTORY: '${{clone}}'
+      REPO_NAME: '${{CF_REPO_NAME}}'
+      COMMAND: gofmt web/dispatcher.go
+
     stage: "test"
 
   MyPushStep:
