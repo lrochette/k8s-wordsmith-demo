@@ -38,11 +38,11 @@ steps:
       - "ls"
     stage: "test"
 
- MyPushStep:
-   title: Pushing to Docker Registry
-   type: push
-   stage: upload
-   tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
-   candidate: '${{MyAppDockerImage}}'
-   image_name: lrochette/k8s-wordsmith-demo 
-   registry: dockerhub # Name of your integration as was defined in the Registry screen
+  MyPushStep:
+    title: Pushing to Docker Registry
+    type: push
+    stage: upload
+    tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
+    candidate: '${{MyAppDockerImage}}'
+    image_name: lrochette/k8s-wordsmith-demo
+    registry: dockerhub # Name of your integration as was defined in the Registry screen
