@@ -45,7 +45,7 @@ steps:
     title: "Building API"
     type: "build"
     image_name: "lrochette/k8s-wordsmith-api"
-    working_directory: "${{clone}}/db"
+    working_directory: "${{clone}}/words"
     tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
     dockerfile: "Dockerfile"
     stage: "build"
