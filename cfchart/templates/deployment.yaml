@@ -1,61 +1,58 @@
 apiVersion: apps/v1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: {{ include "cfchart.fullname" . }}
+  name: db
   labels:
-    {{- include "cfchart.labels" . | nindent 4 }}
+    app: words-db
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
-  selector:
-    matchLabels:
-      {{- include "cfchart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "cfchart.selectorLabels" . | nindent 8 }}
+        app: words-db
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "cfchart.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      - name: db
+        image: lrochette/wordsmith-db
+        ports:
+        - containerPort: 5432
+          name: db
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: words
+  labels:
+    app: words-api
+spec:
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: words-api
+    spec:
+      containers:
+      - name: words
+        image: lrochette/wordsmith-api
+        ports:
+        - containerPort: 8080
+          name: api
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: words-web
+spec:
+  template:
+    metadata:
+      labels:
+        app: words-web
+    spec:
+      containers:
+      - name: web
+        image: lrochette/wordsmith-web
+        ports:
+        - containerPort: 80
+          name: words-web

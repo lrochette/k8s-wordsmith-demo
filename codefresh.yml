@@ -52,6 +52,8 @@ steps:
   Deploy:
     title: deploying to GCE
     type: helm
+    stage: deploy
     chart_name: cfchart
     release_name: first
+    helm_version: 3.0.1
     kube_context: my-first-cluster-1
