@@ -103,8 +103,8 @@ steps:
 
   MyDeploy:
     title: K8s Deploy
-    stage: upload
-    image: lrochette/k8s-wordsmith-web:${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}
+    stage: deploy
+    image: codefresh/cf-deploy-kubernetes
     commands:
       - /cf-deploy-kubernetes kube-deployment.yml
     environment:

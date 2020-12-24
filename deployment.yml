@@ -1,0 +1,20 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        revision: "{{CF_REVISION}}"
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: lrochette/k8s-wordsmith-web:{{CF_BRANCH_TAG_NORMALIZED}}-{{CF_SHORT_REVISION}}
+          ports:
+            - containerPort: 80
+              name: http
