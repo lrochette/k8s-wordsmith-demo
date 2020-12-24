@@ -1,30 +1,29 @@
-apiVersion: apps/v1
+apiVersion: v1
 kind: Service
 metadata:
   name: db
   labels:
-    app: db
+    app: words-db
 spec:
   ports:
     - port: 5432
       targetPort: 5432
       name: db
   selector:
-    matchLabels:
-      app: db
+    app: words-db
   clusterIP: None
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: db
   labels:
-    app: db
+    app: words-db
 spec:
   template:
     metadata:
       labels:
-        app: db
+        app: words-db
     spec:
       containers:
       - name: db
@@ -38,28 +37,28 @@ kind: Service
 metadata:
   name: words
   labels:
-    app: api
+    app: words-api
 spec:
   ports:
     - port: 8080
       targetPort: 8080
       name: api
   selector:
-    app: api
+    app: words-api
   clusterIP: None
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: words
   labels:
-    app: api
+    app: words-api
 spec:
   replicas: 5
   template:
     metadata:
       labels:
-        app: api
+        app: words-api
     spec:
       containers:
       - name: words
@@ -73,31 +72,31 @@ kind: Service
 metadata:
   name: web
   labels:
-    app: web
+    app: words-web
 spec:
   ports:
     - port: 8081
       targetPort: 80
       name: web
   selector:
-    app: web
+    app: words-web
   type: LoadBalancer
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: web
   labels:
-    app: web
+    app: words-web
 spec:
   template:
     metadata:
       labels:
-        app: web
+        app: words-web
     spec:
       containers:
       - name: web
         image: lrochette/k8s-wordsmith-web
         ports:
         - containerPort: 80
-          name: web
+          name: words-web
