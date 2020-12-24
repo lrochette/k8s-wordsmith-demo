@@ -87,26 +87,26 @@ steps:
     image_name: lrochette/k8s-wordsmith-api
     registry: dockerhub
 
-  # Deploy:
-  #   title: deploying to GCE
-  #   type: deploy
-  #   stage: deploy
-  #   kind: kubernetes
-  #   cluster: my-first-cluster-1
-  #   #kube_context: my-first-cluster-1
-  #   namespace: default
-  #   service: web
-  #   #file_path: ./kube-deployment.yml
-  #   candidate:
-  #      image: lrochette/k8s-wordsmith-web:${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}
-  #      registry: dockerhub
-
-  MyDeploy:
-    title: K8s Deploy
+  Deploy:
+    title: deploying to GCE
+    type: deploy
     stage: deploy
-    image: codefresh/cf-deploy-kubernetes
-    commands:
-      - /cf-deploy-kubernetes kube-deployment.yml
-    environment:
-      - KUBECONTEXT=my-first-cluster-1
-      - KUBERNETES_NAMESPACE=default
+    kind: kubernetes
+    cluster: my-first-cluster-1
+    #kube_context: my-first-cluster-1
+    namespace: default
+    service: web
+    #file_path: ./kube-deployment.yml
+    candidate:
+       image: lrochette/k8s-wordsmith-web:latest
+       registry: dockerhub
+
+  # MyDeploy:
+  #   title: K8s Deploy
+  #   stage: deploy
+  #   image: codefresh/cf-deploy-kubernetes
+  #   commands:
+  #     - /cf-deploy-kubernetes kube-deployment.yml
+  #   environment:
+  #     - KUBECONTEXT=my-first-cluster-1
+  #     - KUBERNETES_NAMESPACE=default
