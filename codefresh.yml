@@ -92,8 +92,8 @@ steps:
     type: deploy
     stage: deploy
     kind: kubernetes
-    cluster: my-first-cluster-1
-    #kube_context: my-first-cluster-1
+    cluster: cfcluster
+    #kube_context: cfcluster
     namespace: default
     service: web
     #file_path: ./kube-deployment.yml
@@ -108,5 +108,5 @@ steps:
   #   commands:
   #     - /cf-deploy-kubernetes kube-deployment.yml
   #   environment:
-  #     - KUBECONTEXT=my-first-cluster-1
+  #     - KUBECONTEXT=cfcluster
   #     - KUBERNETES_NAMESPACE=default
