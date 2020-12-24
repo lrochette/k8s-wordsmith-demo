@@ -55,6 +55,7 @@ steps:
     stage: deploy
     kind: kubernetes
     cluster: my-first-cluster-1
+    kube_context: my-first-cluster-1
     namespace: default
     service: web
     candidate:
