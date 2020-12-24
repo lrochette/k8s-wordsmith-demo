@@ -21,11 +21,21 @@ steps:
     git: "github"
     stage: "clone"
 
-  build:
-    title: "Building Docker image"
+  buildweb:
+    title: "Building web"
     type: "build"
     image_name: "lrochette/k8s-wordsmith-web"
     working_directory: "${{clone}}/web"
+    tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
+    dockerfile: "Dockerfile"
+    stage: "build"
+    disable_push: true
+
+  builddb:
+    title: "Building DB"
+    type: "build"
+    image_name: "lrochette/k8s-wordsmith-db"
+    working_directory: "${{clone}}/db"
     tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
     dockerfile: "Dockerfile"
     stage: "build"
@@ -45,7 +55,7 @@ steps:
     type: push
     stage: upload
     tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
-    candidate: '${{build}}'
+    candidate: '${{buildweb}}'
     image_name: lrochette/k8s-wordsmith-web
     registry: dockerhub # Name of your integration as was defined in the Registry screen
 
