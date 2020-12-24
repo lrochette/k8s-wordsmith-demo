@@ -60,4 +60,4 @@ steps:
       kind: kubernetes
       cluster: my-first-cluster-1
       namespace: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
-      service: web
+      file_path: kube-deploymenty.yml
