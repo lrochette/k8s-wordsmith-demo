@@ -50,15 +50,8 @@ steps:
     registry: dockerhub # Name of your integration as was defined in the Registry screen
 
   Deploy:
-    title: deploying to cluster
-    type: deploy
-    stage: deploy
-    arguments:
-      candidate:
-        image: '${{build}}'
-        registry: dockerhub
-      kind: kubernetes
-      cluster: my-first-cluster-1
-      namespace: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
-    working_directory: "${{clone}}"
-    file_path: kube-deployment.yml
+    title: deploying to GCE
+    type: helm
+    chart_name: cfchart
+    release_name: first
+    kube_context: my-first-cluster-1
