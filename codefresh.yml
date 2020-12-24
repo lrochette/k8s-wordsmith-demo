@@ -60,8 +60,8 @@ steps:
       COMMAND: gofmt -d web/dispatcher.go
     stage: "test"
 
-  MyPushStep:
-    title: Pushing to Docker Registry
+  Push-web:
+    title: Pushing web to Docker Registry
     type: push
     stage: upload
     tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
@@ -69,8 +69,8 @@ steps:
     image_name: lrochette/k8s-wordsmith-web
     registry: dockerhub
 
-  MyPushStep:
-    title: Pushing to Docker Registry
+  Push-DB:
+    title: Pushing DB to Docker Registry
     type: push
     stage: upload
     tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
@@ -78,8 +78,8 @@ steps:
     image_name: lrochette/k8s-wordsmith-db
     registry: dockerhub
 
-  MyPushStep:
-    title: Pushing to Docker Registry
+  Push-API:
+    title: Pushing API to Docker Registry
     type: push
     stage: upload
     tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
