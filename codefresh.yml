@@ -51,7 +51,7 @@ steps:
 
   Deploy:
     title: deploying to GCE
-    type: helm
+    type: deploy
     stage: deploy
     kind: kubernetes
     cluster: my-first-cluster-1
