@@ -129,6 +129,7 @@ steps:
        registry: dockerhub
 
   smokingTests:
+    stage: smoke
     title: test web app
     services:
       composition:
@@ -140,4 +141,4 @@ steps:
         image: 'byrnedo/alpine-curl'
         timeoutSeconds: 30
         commands:
-          - "curl web-app:8080"          
+          - "curl web-app:8080"
