@@ -134,7 +134,7 @@ steps:
     services:
       composition:
         web-app:
-          image: ${{buildweb}}
+          image: '${{buildweb}}'
           ports:
             - 8080
       readiness:
