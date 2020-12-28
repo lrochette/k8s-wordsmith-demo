@@ -91,8 +91,8 @@ steps:
     image_name: lrochette/k8s-wordsmith-api
     registry: dockerhub
 
-  Deploy:
-    title: deploying to GCE
+  DeployWeb:
+    title: deploying web to GCE
     type: deploy
     stage: deploy
     kind: kubernetes
@@ -101,4 +101,28 @@ steps:
     service: web
     candidate:
        image: ${{buildweb}}
+       registry: dockerhub
+
+  DeployAPI:
+    title: deploying API to GCE
+    type: deploy
+    stage: deploy
+    kind: kubernetes
+    cluster: 'cfcluster@cfproj'
+    namespace: default
+    service: web
+    candidate:
+       image: ${{buildapi}}
+       registry: dockerhub
+
+  DeployDB:
+    title: deploying DB to GCE
+    type: deploy
+    stage: deploy
+    kind: kubernetes
+    cluster: 'cfcluster@cfproj'
+    namespace: default
+    service: web
+    candidate:
+       image: ${{builddb}}
        registry: dockerhub
