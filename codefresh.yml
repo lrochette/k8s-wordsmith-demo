@@ -98,7 +98,7 @@ steps:
     service: web
     #file_path: ./kube-deployment.yml
     candidate:
-       image: lrochette/k8s-wordsmith-web:latest
+       image: lrochette/k8s-wordsmith-web
        registry: dockerhub
 
   # MyDeploy:
