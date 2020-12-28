@@ -64,7 +64,9 @@ steps:
     title: Pushing web to Docker Registry
     type: push
     stage: upload
-    tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
+    tags:
+      - "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
+      - latest
     candidate: '${{buildweb}}'
     image_name: lrochette/k8s-wordsmith-web
     registry: dockerhub
@@ -73,7 +75,9 @@ steps:
     title: Pushing DB to Docker Registry
     type: push
     stage: upload
-    tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
+    tags:
+      - "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
+      - latest
     candidate: '${{builddb}}'
     image_name: lrochette/k8s-wordsmith-db
     registry: dockerhub
@@ -82,7 +86,9 @@ steps:
     title: Pushing API to Docker Registry
     type: push
     stage: upload
-    tag: "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
+    tags:
+      - "${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}"
+      - latest
     candidate: '${{buildapi}}'
     image_name: lrochette/k8s-wordsmith-api
     registry: dockerhub
