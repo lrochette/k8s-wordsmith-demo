@@ -131,6 +131,9 @@ steps:
   smokingTests:
     stage: smoke
     title: test web app
+    image: '${{buildweb}}'
+    commands:
+      - echo Hello world
     services:
       composition:
         web-app:
