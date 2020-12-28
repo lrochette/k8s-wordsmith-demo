@@ -9,6 +9,7 @@ stages:
   - test
   - upload
   - deploy
+  - smoke
 
 steps:
   clone:
@@ -126,3 +127,17 @@ steps:
     candidate:
        image: ${{builddb}}
        registry: dockerhub
+
+  smokingTests:
+    title: test web app
+    services:
+      composition:
+        web-app:
+          image: ${{buildweb}}
+          ports:
+            - 8080
+      readiness:
+        image: 'byrnedo/alpine-curl'
+        timeoutSeconds: 30
+        commands:
+          - "curl web-app:8080"          
