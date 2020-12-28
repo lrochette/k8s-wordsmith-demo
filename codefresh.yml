@@ -15,8 +15,6 @@ steps:
     title: "Cloning repository"
     type: "git-clone"
     repo: "${{CF_REPO_OWNER}}/${{CF_REPO_NAME}}"
-    # CF_BRANCH value is auto set when pipeline is triggered
-    # Learn more at codefresh.io/docs/docs/codefresh-yaml/variables/
     revision: "${{CF_BRANCH}}"
     git: "github"
     stage: "clone"
@@ -98,21 +96,9 @@ steps:
     type: deploy
     stage: deploy
     kind: kubernetes
-    cluster: cfcluster@cfproj
-    #kube_context: cfcluster@cfproj
+    cluster: 'cfcluster@cfproj'
     namespace: default
     service: web
-    #file_path: ./kube-deployment.yml
     candidate:
        image: ${{buildweb}}
        registry: dockerhub
-
-  # MyDeploy:
-  #   title: K8s Deploy
-  #   stage: deploy
-  #   image: codefresh/cf-deploy-kubernetes
-  #   commands:
-  #     - /cf-deploy-kubernetes kube-deployment.yml
-  #   environment:
-  #     - KUBECONTEXT=cfcluster@cfproj
-  #     - KUBERNETES_NAMESPACE=default
