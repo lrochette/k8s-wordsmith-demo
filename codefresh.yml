@@ -136,7 +136,7 @@ steps:
       - echo Hello world
     services:
       composition:
-        web-app:
+        web:
           image: '${{buildweb}}'
           ports:
             - 8080
@@ -144,4 +144,4 @@ steps:
         image: 'byrnedo/alpine-curl'
         timeoutSeconds: 30
         commands:
-          - "curl web-app:8080"
+          - "curl web:8080"
