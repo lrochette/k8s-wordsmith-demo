@@ -1,7 +1,7 @@
 # More examples of Codefresh YAML can be found at
 # https://codefresh.io/docs/docs/yaml-examples/examples/
 
-#version: "1.0"
+version: "1.0"
 # Stages can help you organize your steps in stages
 stages:
   - clone
@@ -131,17 +131,12 @@ steps:
   smokingTests:
     stage: smoke
     title: test web app
-    image: '${{buildweb}}'
+    image: 'byrnedo/alpine-curl'
     commands:
-      - echo Hello world
+      - "curl web:8080"
     services:
       composition:
         web:
           image: '${{buildweb}}'
           ports:
             - 8080
-      readiness:
-        image: 'byrnedo/alpine-curl'
-        timeoutSeconds: 30
-        commands:
-          - "curl web:8080"
